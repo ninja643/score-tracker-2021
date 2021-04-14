@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="rs.ac.ni.pmf.android.scoretracker2021.model.Game.Team" />
+
+        <variable
+            name="game"
+            type="rs.ac.ni.pmf.android.scoretracker2021.model.Game" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{game == null ? View.VISIBLE : View.GONE}">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/please_select_a_game" />
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{game != null ? View.VISIBLE : View.GONE}">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/horizontal_middle_guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
+
+            <!-- Team labels -->
+            <TextView
+                android:id="@+id/label_team_A"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:gravity="center"
+
+                android:text="@{game.teamA}"
+
+                app:layout_constraintLeft_toRightOf="@id/vertical_guideline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Team A" />
+
+            <TextView
+                android:id="@+id/label_team_B"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:gravity="center"
+
+                android:text="@{game.teamB}"
+
+                app:layout_constraintLeft_toRightOf="@id/vertical_guideline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/horizontal_middle_guideline"
+                tools:text="Team B" />
+
+            <!-- Score display -->
+
+            <TextView
+                android:id="@+id/label_score_A"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:gravity="center"
+
+                android:text="@{String.valueOf(game.scoreA)}"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="@dimen/score_size"
+
+                app:layout_constraintLeft_toLeftOf="@id/vertical_guideline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_team_A"
+
+                tools:text="3" />
+
+            <TextView
+                android:id="@+id/label_score_B"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:gravity="center"
+
+                android:text="@{String.valueOf(game.scoreB)}"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="@dimen/score_size"
+
+                app:layout_constraintLeft_toLeftOf="@id/vertical_guideline"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/label_team_B"
+
+                tools:text="2" />
+
+            <!-- Control buttons -->
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="@dimen/default_margin"
+
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@id/horizontal_middle_guideline"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                app:layout_constraintRight_toRightOf="@id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/button_teamA_3p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_A, 3)}"
+                    android:text="@string/add_3_points" />
+
+                <Button
+                    android:id="@+id/button_teamA_2p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_A, 2)}"
+                    android:text="@string/add_2_points" />
+
+                <Button
+                    android:id="@+id/button_teamA_1p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_A, 1)}"
+                    android:text="@string/add_1_point" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="@dimen/default_margin"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="@dimen/default_margin"
+
+                android:orientation="horizontal"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+
+                app:layout_constraintRight_toRightOf="@id/vertical_guideline"
+                app:layout_constraintTop_toTopOf="@id/horizontal_middle_guideline">
+
+                <Button
+                    android:id="@+id/button_teamB_3p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_B, 3)}"
+                    android:text="@string/add_3_points" />
+
+                <Button
+                    android:id="@+id/button_teamB_2p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_B, 2)}"
+                    android:text="@string/add_2_points" />
+
+                <Button
+                    android:id="@+id/button_teamB_1p"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/default_margin"
+                    android:layout_weight="1"
+                    android:onClick="@{() -> game.addScore(Team.TEAM_B, 1)}"
+                    android:text="@string/add_1_point" />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+
+                android:onClick="@{() -> game.reset()}"
+                android:text="@string/reset_score"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="@id/vertical_guideline"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
+</layout>
